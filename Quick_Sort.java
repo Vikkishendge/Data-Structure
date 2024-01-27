@@ -32,14 +32,14 @@ public class Quick_Sort
 		return j;
 		
 	}
-	int partition;
+	
 	public void quicksort(int arr[],int low,int high)
 	{
 		if(low<high)
 		{
-			partition=Partition(arr,low,high);
-			Partition(arr,low,partition-1);
-			Partition(arr,partition+1,high);
+			int pindx=Partition(arr,low,high);
+			quicksort(arr,low,pindx-1);
+			quicksort(arr,pindx+1,high);
 		}
 		
 		
