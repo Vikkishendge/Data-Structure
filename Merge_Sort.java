@@ -1,80 +1,59 @@
-package DSA;
-import java.lang.reflect.Array;
-import java.util.*;
-public class Merge_Sort 
+class MergeSort
 {
-	int mid,low,high;
-	public void Merge(int arr[],int low,int mid,int high)
+	public static void conqure(int arr[],int start,int mid,int end)
 	{
-		int arr1[] = null;
-		int arr2[]=null;
-		int left=low;
-		int right=mid+1;
-		int j=0;
-		for(int i=low;i<=mid;i++)
+		// conqure
+		int merge[]=new int[end-start+1];
+		int indx1=start;
+		int indx2=mid+1;
+		int i=0;
+		while(indx1<=mid && indx2<=end)
 		{
-			arr1[i]=arr[left];
-		}
-		for(int i=right;i<=high;i++)
-		{
-			arr2[i]=arr[right];
-		}
-		while(left<=mid && right<=high)
-		{
-			if(arr1[left]<=arr2[right])
+			if(arr[indx1]<=arr[indx2])
 			{
-				arr1[j]=arr1[left];
-				j++;
-				left++;
+				merge[i++]=arr[indx1++];
 			}else
 			{
-				arr1[j]=arr2[right];
-				j++;
-				right++;
+				merge[i++]=arr[indx2++];
 			}
 		}
-		while(left<=mid)
+		while(indx1<=mid)
 		{
-			arr1[j]=arr1[left];
-			j++;
-			left++;
+			merge[i++]=arr[indx1++];
 		}
-		while(right<=high)
+		while(indx2<=end)
 		{
-			arr1[j]=arr2[right];
-			j++;right++;
+			merge[i++]=arr[indx2++];
 		}
-		for(int i=low;i<high;i++)
+
+		for(int j=0,k=start;j<merge.length;j++,k++)
 		{
-			arr[i]=arr1[i];
+			arr[k]=merge[j];
 		}
+	}
+	public static void divide(int arr[],int start,int end)
+	{
+		if(start>=end)
+		{
+			return;	
+		}
+		int mid=start +(end-start)/2;
+		divide(arr,start,mid);
+
+		divide(arr,mid+1,end);
+
+		conqure(arr,start,mid,end);
+	}
+	public static void main(String args[])
+	{
+		int arr[]={3,5,1,6,2,4};
+		int n=arr.length;
+
+		divide(arr,0,n-1);
+
 		for(int i=0;i<arr.length;i++)
 		{
 			System.out.println(arr[i]);
 		}
-		
-	
 	}
-	
-	public void Divide(int arr[],int low,int high)
-	{
-		if(low<high)
-		{
-			mid=(low+high)/2;
-		
-		Divide(arr,low,mid);
-		Divide(arr,mid+1,high);
-		Merge(arr,low,mid,high);
-		}
-	}
-
-	public static void main(String[] args) 
-	{
-		Merge_Sort obj=new Merge_Sort();
-		int arr[]= {20,10,50,30,40};
-		int n=arr.length;
-		obj.Divide(arr,0,n);
-
-	}
-
 }
